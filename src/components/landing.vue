@@ -159,7 +159,4 @@ export default {
   border-radius: 5px;
   box-shadow: 3px 3px 10px #1111118f;
 }
-/* 
-https://r2---sn-ci5gup-pmjk.googlevideo.com/videoplayback?expire=1603730241&ei=4KaWX9LWOsjKvATGy45I&ip=2401%3A4900%3A447e%3Ab7cd%3A448d%3A541%3A3829%3A38c&id=o-AMcieHBBBsk4rL4bniUZOuLWndbxnJgkF4Co9P1tu9lU&itag=251&source=youtube&requiressl=yes&mh=P6&mm=31%2C29&mn=sn-ci5gup-pmjk%2Csn-ci5gup-qxaee&ms=au%2Crdu&mv=m&mvi=2&pl=46&initcwndbps=220000&vprv=1&mime=audio%2Fwebm&gir=yes&clen=3319290&dur=205.021&lmt=1603013416804288&mt=1603708481&fvip=5&keepalive=yes&c=WEB_REMIX&txp=5532434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cgir%2Cclen%2Cdur%2Clmt&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRgIhAIOPIOm9Xa1GaOb-_5jUIi4cFvasrVcOSk9ddjhSRDuOAiEA4gzHeCvqAeSx6Q-WTbjC4DoLsVl2vPyKSiIYE6ORbhc%3D&alr=yes&sig=AOq0QJ8wRgIhANmIyVovQ31JpU1X9umvzDH4bAm8SCff56g9kDpJwUoTAiEA9vsGj6xTPEKJA6QZUDZcSWXff3Qqti9VkrXztPveknY%3D&cpn=rDKjF2EAwTU4Iaz_&cver=0.1&range=517925-855458&rn=11&rbuf=21652
- */
 </style>

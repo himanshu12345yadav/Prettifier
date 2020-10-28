@@ -6,7 +6,7 @@ Prettifier is completely written in `VUE JS`
 
 # Live Preview
 
-To get a live preview , [Prettifier](https://himanshuy12345yadav.github.io/prettifier)
+To get a live preview , [`Prettifier`](https://himanshuy12345yadav.github.io/prettifier)
 
 ## Installation
 
@@ -18,7 +18,7 @@ Make sure that `node.js` is installed in your system
 npm install --production
 ```
 
-## Run on Localhost[127.0.0.1]
+## Run on Localhost
 
 To run Prettiefier on localhost
 
