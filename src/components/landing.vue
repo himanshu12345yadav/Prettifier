@@ -5,11 +5,11 @@
   <div class="showcase">
     <div class="container">
       <div class="product-intro">
-        <div class="product-intro-heading">Modern Prettifier</div>
+        <div class="product-intro-heading">Beautify Large Url's</div>
         <div class="product-intro-content">
           Prettifier is multipurpose beautifying tool which is efficient, fast ,
-          reliable . Prettifier can parse large URL's , json payload, upfronts
-          and many more.
+          reliable . Prettifier can parse and beautify large URL's , json
+          payload, and many more.
         </div>
       </div>
       <div class="product-image">
@@ -158,5 +158,15 @@ export default {
   max-width: 100%;
   border-radius: 5px;
   box-shadow: 3px 3px 10px #1111118f;
+}
+@media (max-width: 768px) {
+  .main-parser {
+    width: 90%;
+  }
+}
+@media (max-width: 576px) {
+  .main-parser {
+    width: 95%;
+  }
 }
 </style>

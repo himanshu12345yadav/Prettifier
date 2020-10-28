@@ -14,6 +14,7 @@
         ref="input_text"
         @keyup="keyUpHandler"
         v-model="input_text"
+        placeholder="Write your URL Here!"
       ></textarea>
     </div>
     <div
@@ -142,8 +143,10 @@
   justify-content: center;
   align-items: center;
 }
-.hidden {
-  display: none;
+::placeholder {
+  text-align: center;
+  line-height: 400px;
+  font-size: 1.5rem;
 }
 .parsing-error-message {
   font-family: "Lato", sans-serif !important;
@@ -156,9 +159,20 @@
   letter-spacing: 1.5px;
 }
 .parsing-error-icon {
-  color: white;
+  color: #c2c2c2;
   padding: 20px;
   font-size: 3rem;
+}
+
+@media (max-width: 768px) {
+  ::placeholder {
+    font-size: 1.1rem;
+  }
+}
+@media (max-width: 576px) {
+  ::placeholder {
+    font-size: 1rem;
+  }
 }
 </style>
 
