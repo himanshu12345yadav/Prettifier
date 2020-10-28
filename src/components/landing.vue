@@ -1,6 +1,6 @@
 <template>
   <div class="heading">
-    <h1 class="display">Parser</h1>
+    <h1 class="display">Prettifier</h1>
   </div>
   <div class="parser-wrapper">
     <div class="main-parser">
@@ -26,7 +26,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .heading {
   background-color: #27718a;
   width: 100%;

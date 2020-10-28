@@ -13,7 +13,6 @@
         tabindex="0"
         ref="input_text"
         @keyup="keyUpHandler"
-        @keydown="keyDownHandler"
         v-model="input_text"
       ></textarea>
     </div>
@@ -32,15 +31,30 @@
         tabindex="0"
         class="parser-output-content"
         ref="output_text"
-      ></div>
-      <div class="parsing-error hidden" ref="parsing_error">
+      >
+        <div v-if="render && !isBroken">
+          <div
+            class="parsedDiv"
+            v-for="(item, index) in reactive_data"
+            :key="index"
+          >
+            <span class="key">{{ item.key }} : </span>
+            <span class="value">{{ item.value }}</span>
+          </div>
+        </div>
+      </div>
+      <div
+        v-bind:class="{ hidden: !isBroken }"
+        class="parsing-error"
+        ref="parsing_error"
+      >
         <div class="parsing-error-message">Sorry, This URL is Broken</div>
       </div>
     </div>
   </div>
 </template>
 
-<style >
+<style scoped>
 .key {
   color: #00f7ff;
 }
@@ -51,8 +65,6 @@
   display: block;
   height: fit-content !important;
 }
-</style>
-<style>
 .parser-content {
   width: 100%;
   height: calc(100% - 30px);
@@ -155,6 +167,8 @@ export default {
       isDraging: false,
       isBroken: false,
       input_text: "",
+      reactive_data: [],
+      render: false,
     };
   },
   methods: {
@@ -174,44 +188,34 @@ export default {
     },
     keyUpHandler(event) {
       let parser = new Parser(this.input_text);
-      this.$refs.output_text.innerHTML = "";
       try {
-        if (!this.isBroken) {
-          this.$refs.parsing_error.classList.add("hidden");
-        }
         if (event.target.value.trim().length === 0) {
-          throw new Error("URI is Empty");
+          throw new Error("URL is Empty");
         }
-        const parsed_data = parser.parsedOutput();
-        parsed_data.forEach((item) => {
-          let parsedDiv = document.createElement("div");
-          parsedDiv.classList.add("parsedDiv");
-          let keySpan = document.createElement("span");
-          keySpan.classList.add("key");
-          keySpan.innerHTML = `${item.key} : `;
-          parsedDiv.appendChild(keySpan);
-          let valueSpan = document.createElement("span");
-          valueSpan.classList.add("value");
-          valueSpan.innerHTML = `${item.value}`;
-          parsedDiv.appendChild(valueSpan);
-          this.$refs.output_text.appendChild(parsedDiv);
-        });
+        let parsed_data = parser.parsedOutput();
+        if (!this.render) {
+          this.reactive_data = parsed_data;
+        } else {
+          this.reactive_data = [];
+          parsed_data.forEach((item, index) => {
+            this.reactive_data.splice(index, 0, {
+              key: item.key,
+              value: item.value,
+            });
+          });
+        }
+        this.render = true;
+        this.isBroken = false;
       } catch (err) {
-        if (err.message === "URI is Empty") {
-          this.$refs.parsing_error.classList.remove("hidden");
+        if (err.message === "URL is Empty") {
           this.$refs.parsing_error.children[0].innerText =
             "Start, Typing the URL";
           this.isBroken = true;
         } else {
-          this.$refs.parsing_error.classList.remove("hidden");
-          this.$refs.parsing_error.children[0].innerText = "Malformed URI";
+          this.$refs.parsing_error.children[0].innerText = "Malformed URL";
           this.isBroken = true;
         }
       }
-    },
-    keyDownHandler() {
-      this.$refs.parsing_error.classList.add("hidden");
-      this.isBroken = false;
     },
   },
   mounted() {
