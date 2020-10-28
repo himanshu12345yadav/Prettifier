@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "author": "Himanshu Yadav",
-  "homepage": "https://himanshu12345yadav.github.io/prettifier",
+  "homepage": "https://himanshu12345yadav.github.io/Prettifier",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

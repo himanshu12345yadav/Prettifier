@@ -6,7 +6,7 @@ Prettifier is completely written in `VUE JS`
 
 # Live Preview
 
-To get a live preview inside your browser, [`Click here`](https://himanshu12345yadav.github.io/prettifier)
+To get a live preview inside your browser, [`Click here`](https://himanshu12345yadav.github.io/Prettifier)
 
 # Usage
 
