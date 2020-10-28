@@ -43,12 +43,11 @@
           </div>
         </div>
       </div>
-      <div
-        v-bind:class="{ hidden: !isBroken }"
-        class="parsing-error"
-        ref="parsing_error"
-      >
-        <div class="parsing-error-message">Sorry, This URL is Broken</div>
+      <div v-show="isBroken" class="parsing-error">
+        <div class="parsing-error-message">
+          <i class="fa fa-exclamation-triangle parsing-error-icon"></i>
+          {{ parsing_error_message }}
+        </div>
       </div>
     </div>
   </div>
@@ -72,10 +71,9 @@
   flex-direction: row;
   position: relative;
 }
-.parser-content * {
+.parser-content *:not(i) {
   font-family: monospace;
   font-size: 1.1rem;
-  font-size: normal;
 }
 .parser-content textarea {
   border-radius: 10px;
@@ -85,7 +83,6 @@
   outline: none;
   border: none;
   resize: none;
-  font-style: normal;
   color: #ebebeb;
   padding: 5px 15px;
   color: #e99d5f;
@@ -100,7 +97,6 @@
   font-style: normal;
   color: #ebebeb;
   font-family: monospace;
-  padding: 5px 15px;
   overflow-y: scroll;
   height: 100%;
 }
@@ -150,9 +146,19 @@
   display: none;
 }
 .parsing-error-message {
+  font-family: "Lato", sans-serif !important;
+  color: #c57070;
+  font-size: 1.5rem !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  letter-spacing: 1.5px;
+}
+.parsing-error-icon {
   color: white;
-  font-size: 1.5rem;
-  color: #c95b5b;
+  padding: 20px;
+  font-size: 3rem;
 }
 </style>
 
@@ -169,6 +175,7 @@ export default {
       input_text: "",
       reactive_data: [],
       render: false,
+      parsing_error_message: "",
     };
   },
   methods: {
@@ -208,11 +215,10 @@ export default {
         this.isBroken = false;
       } catch (err) {
         if (err.message === "URL is Empty") {
-          this.$refs.parsing_error.children[0].innerText =
-            "Start, Typing the URL";
+          this.parsing_error_message = "Start, Typing the URL";
           this.isBroken = true;
         } else {
-          this.$refs.parsing_error.children[0].innerText = "Malformed URL";
+          this.parsing_error_message = "Malformed URL";
           this.isBroken = true;
         }
       }
