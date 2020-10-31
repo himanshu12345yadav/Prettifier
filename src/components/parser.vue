@@ -54,7 +54,7 @@
   </div>
 </template>
 
-<style scoped>
+<style>
 .key {
   color: #00f7ff;
 }
@@ -63,7 +63,15 @@
 }
 .parsedDiv {
   display: block;
-  height: fit-content !important;
+  height: auto;
+  max-width: 100%;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.parsedDiv span {
+  display: inline-block;
+  max-width: 100%;
+  height: auto;
 }
 .parser-content {
   width: 100%;
@@ -73,7 +81,7 @@
   position: relative;
 }
 .parser-content *:not(i) {
-  font-family: monospace;
+  font-family: "Roboto Mono", monospace;
   font-size: 1.1rem;
 }
 .parser-content textarea {
@@ -84,28 +92,27 @@
   outline: none;
   border: none;
   resize: none;
-  color: #ebebeb;
   padding: 5px 15px;
   color: #e99d5f;
 }
 .parser-output-content {
   border-radius: 10px;
   width: 100%;
+  max-width: 100%;
   max-height: 450px !important;
   background-color: transparent;
   outline: none;
   border: none;
   font-style: normal;
   color: #ebebeb;
-  font-family: monospace;
-  overflow-y: scroll;
+  font-family: "Roboto Mono", monospace;
   height: 100%;
 }
 .parser-output-content div {
   font-style: normal;
   color: #ebebeb;
-  font-family: monospace;
   padding: 5px 15px;
+  line-height: 1.6;
 }
 .parser-input {
   height: calc(100% - 3px);
@@ -149,7 +156,7 @@
   font-size: 1.5rem;
 }
 .parsing-error-message {
-  font-family: "Lato", sans-serif !important;
+  font-family: "Recursive", sans-serif!important;
   color: #c57070;
   font-size: 1.5rem !important;
   display: flex;
@@ -197,9 +204,9 @@ export default {
       let rect = this.$refs.parser_content.getBoundingClientRect();
       const box_width = rect.right - rect.left;
       let x_offset = event.clientX - rect.left;
-      if (this.isDraging && x_offset >= 15 && x_offset <= box_width - 10) {
+      if (this.isDraging && x_offset >= 15 && x_offset <= box_width - 30) {
         this.$refs.parser_divider.style.left = `${x_offset}px`;
-        this.$refs.parser_input.style.width = `${x_offset}px`;
+        this.$refs.parser_input.style.width = `${x_offset - 10}px`;
         this.$refs.parser_output.style.width = `${box_width - x_offset}px`;
         this.$refs.input_text.blur();
         this.$refs.output_text.blur();

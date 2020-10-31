@@ -37,21 +37,24 @@
       <Parser />
     </div>
   </div>
+  <Footer />
 </template>
 
 <script>
 import Parser from "../components/parser.vue";
 import Features from "../components/features";
+import Footer from "../components/footer.vue";
 export default {
   name: "Landing",
   components: {
     Parser,
     Features,
+    Footer,
   },
 };
 </script>
 
-<style scoped>
+<style>
 .heading {
   background-color: var(--primary-color);
   width: 100%;
@@ -62,21 +65,20 @@ export default {
   padding: 10px 50px;
   color: white;
   font-weight: 300;
-  font-family: "Lato", sans-serif;
 }
 .parser-wrapper {
-  display: grid;
-  place-items: center;
-  width: 100%;
+  display: flex;
+  justify-content: center;
+  max-width: 1400px;
   height: 70vh;
-  margin-top: 10vh;
+  max-height: 70vh;
+  margin: 10vh 0px;
 }
 .main-parser {
   width: 80%;
-  height: 100%;
+  max-width: 100%;
   background-color: #161616;
   border-radius: 5px;
-  color: white;
   box-shadow: 2px 2px 10px #00000086;
 }
 .parser-header {
@@ -125,7 +127,6 @@ export default {
   display: grid;
   font-family: "Lato", sans-serif;
   color: white;
-  font-weight: 300;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-gap: 20px;
 }
