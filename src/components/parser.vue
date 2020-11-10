@@ -69,7 +69,7 @@
   color: #f3e143;
 }
 .QueryParameters {
-  color: #e2838f;
+  color: #e283ca;
 }
 .parsedDiv {
   display: block;

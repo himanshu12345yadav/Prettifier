@@ -2,9 +2,9 @@ class Parser {
     constructor(uri) {
         this.uri = uri.trim();
         this.Verifier = /^((http|https|ftp|mailto|file|data|irc):)(\/\/([^/?#]*))([^?#]*)(\?([^#]*))?(#(.*))?/;
-        this.valueRegex = /(?<=&?\w+=)[=\w,.-:_-]+/g;
-        this.keyRegex = /(?<=[&?])[\w\d]+/g;
-        this.seperator = /^(http|https|ftp|mailto|file|data|irc):\/\/([^/?#]*)([^?#]*)?(\?[^#]*)?#?(.*)?/g;
+        // this.valueLookbehindRegex = /(?<=&?\w+=)[=\w,.-:_-]+/g;
+        // this.keyLookbehindRegex = /(?<=[&?])[\w\d]+/g;
+        this.seperator = /^(http|https|ftp|mailto|file|data|irc):\/\/([^/?#]*)([^?#]*)?\??([^#]*)?#?(.*)?/g;
     }
     decoder() {
         this.decoded_URI = decodeURIComponent(this.uri);
@@ -50,16 +50,12 @@ class Parser {
                     key: 'QueryParameters',
                     value: '---------------QueryParameters---------------',
                 });
-                let key = [
-                    ...this.componentsMapper['Query'].match(this.keyRegex),
-                ];
-                let value = [
-                    ...this.componentsMapper['Query'].match(this.valueRegex),
-                ];
-                value.forEach((value, index) => {
-                    let keyClone = key[index];
-                    let obj = { key: keyClone, value: value };
-                    parsed.push(obj);
+                let pairs = this.componentsMapper['Query'].split('&');
+                pairs.forEach((item) => {
+                    parsed.push({
+                        key: item.split('=')[0],
+                        value: item.split('=')[1],
+                    });
                 });
             }
             return parsed;
