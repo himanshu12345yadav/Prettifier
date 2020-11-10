@@ -125,7 +125,6 @@ export default {
 .container {
   padding-top: 2%;
   display: grid;
-  font-family: "Lato", sans-serif;
   color: white;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-gap: 20px;

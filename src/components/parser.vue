@@ -39,8 +39,15 @@
             v-for="(item, index) in reactive_data"
             :key="index"
           >
-            <span class="key">{{ item.key }} : </span>
-            <span class="value">{{ item.value }}</span>
+            <span
+              v-if="item.key === 'QueryParameters'"
+              class="QueryParameters"
+              >{{ item.value }}</span
+            >
+            <span v-else>
+              <span class="key">{{ item.key }} : </span>
+              <span class="value">{{ item.value }}</span>
+            </span>
           </div>
         </div>
       </div>
@@ -56,10 +63,13 @@
 
 <style>
 .key {
-  color: #00f7ff;
+  color: #7af5e9;
 }
 .value {
-  color: #00ff62;
+  color: #f3e143;
+}
+.QueryParameters {
+  color: #e2838f;
 }
 .parsedDiv {
   display: block;
@@ -117,7 +127,7 @@
 .parser-input {
   height: calc(100% - 3px);
   width: calc((100% - 20px) / 2);
-  border-top: 2px solid #0ba04c;
+  border-top: 2px solid #28d372;
 }
 .parser-divider {
   width: 20px;
@@ -135,7 +145,7 @@
   margin-left: auto;
   width: calc((100% - 20px) / 2);
   height: calc(100% - 3px);
-  border-top: 2px solid #b317b3;
+  border-top: 2px solid #e043e0;
   overflow-y: scroll;
   position: relative;
 }
@@ -154,10 +164,11 @@
   text-align: center;
   line-height: 400px;
   font-size: 1.5rem;
+  font-family: "Recursive", sans-serif;
 }
 .parsing-error-message {
-  font-family: "Recursive", sans-serif!important;
-  color: #c57070;
+  font-family: "Recursive", sans-serif !important;
+  color: #ee6f6f;
   font-size: 1.5rem !important;
   display: flex;
   flex-direction: column;
@@ -166,7 +177,7 @@
   letter-spacing: 1.5px;
 }
 .parsing-error-icon {
-  color: #c2c2c2;
+  color: #d8d8d8;
   padding: 20px;
   font-size: 3rem;
 }
