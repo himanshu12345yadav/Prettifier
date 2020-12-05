@@ -2,52 +2,67 @@
   <div
     class="parser-content"
     ref="parser_content"
-    @mousemove="dividerhandler($event)"
+    @mousemove="isDraging ? dividerhandler($event) : null"
   >
-    <div class="parser-input" ref="parser_input">
-      <textarea
-        autocorrect="false"
-        autocapitalize="false"
-        autocomplete="off"
-        spellcheck="false"
-        tabindex="0"
-        ref="input_text"
-        @keyup="keyUpHandler"
-        v-model="input_text"
-        placeholder="Write your URL Here!"
-      ></textarea>
+    <div
+      class="parser-input"
+      ref="parser_input"
+      v-bind:class="{ animate: !isDraging }"
+    >
+      <div class="input-text-wrapper">
+        <textarea
+          autocorrect="false"
+          autocapitalize="false"
+          autocomplete="off"
+          spellcheck="false"
+          tabindex="0"
+          ref="input_text"
+          @keyup="keyUpHandler"
+          v-model="input_text"
+          placeholder="Write your URL Here!"
+        ></textarea>
+      </div>
     </div>
     <div
       class="parser-divider"
       ref="parser_divider"
+      title="Double Click to expand"
       @mousedown="isDraging = true"
+      @dblclick="expand"
+      v-bind:class="{ animate: !isDraging }"
     ></div>
-    <div class="parser-output" ref="parser_output">
-      <div
-        contenteditable="true"
-        autocorrect="false"
-        autocapitalize="false"
-        autocomplete="off"
-        spellcheck="false"
-        tabindex="0"
-        class="parser-output-content"
-        ref="output_text"
-      >
-        <div v-if="render && !isBroken">
-          <div
-            class="parsedDiv"
-            v-for="(item, index) in reactive_data"
-            :key="index"
-          >
-            <span
-              v-if="item.key === 'QueryParameters'"
-              class="QueryParameters"
-              >{{ item.value }}</span
+    <div
+      class="parser-output"
+      ref="parser_output"
+      v-bind:class="{ animate: !isDraging }"
+    >
+      <div class="parsed-text-wrapper">
+        <div
+          contenteditable="true"
+          autocorrect="false"
+          autocapitalize="false"
+          autocomplete="off"
+          spellcheck="false"
+          tabindex="0"
+          class="parser-output-content"
+          ref="output_text"
+        >
+          <div v-if="render && !isBroken">
+            <div
+              class="parsedDiv"
+              v-for="(item, index) in reactive_data"
+              :key="index"
             >
-            <span v-else>
-              <span class="key">{{ item.key }} : </span>
-              <span class="value">{{ item.value }}</span>
-            </span>
+              <span
+                v-if="item.key === 'QueryParameters'"
+                class="QueryParameters"
+                >{{ item.value }}</span
+              >
+              <span v-else>
+                <span class="key">{{ item.key }} : </span>
+                <span class="value">{{ item.value }}</span>
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -104,6 +119,12 @@
   resize: none;
   padding: 5px 15px;
   color: #e99d5f;
+  min-width: 150px;
+}
+.input-text-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow-x: scroll;
 }
 .parser-output-content {
   border-radius: 10px;
@@ -117,6 +138,9 @@
   color: #ebebeb;
   font-family: "Roboto Mono", monospace;
   height: 100%;
+}
+.parsed-text-wrapper {
+  min-width: 150px;
 }
 .parser-output-content div {
   font-style: normal;
@@ -140,6 +164,9 @@
   left: 50%;
   top: 0px;
   z-index: 10;
+}
+.animate {
+  transition: width 0.5s ease-in-out, left 0.5s ease-in-out;
 }
 .parser-output {
   margin-left: auto;
@@ -208,17 +235,21 @@ export default {
       reactive_data: [],
       render: false,
       parsing_error_message: "",
+      divider_position: ["left", "center", "right"],
+      active_divider_position: "center",
+      offset: -1,
     };
   },
   methods: {
     dividerhandler(event) {
+      event.preventDefault();
       let rect = this.$refs.parser_content.getBoundingClientRect();
       const box_width = rect.right - rect.left;
       let x_offset = event.clientX - rect.left;
-      if (this.isDraging && x_offset >= 15 && x_offset <= box_width - 30) {
+      if (this.isDraging && x_offset >= 10 && x_offset <= box_width - 20) {
         this.$refs.parser_divider.style.left = `${x_offset}px`;
         this.$refs.parser_input.style.width = `${x_offset - 10}px`;
-        this.$refs.parser_output.style.width = `${box_width - x_offset}px`;
+        this.$refs.parser_output.style.width = `${box_width - x_offset - 10}px`;
         this.$refs.input_text.blur();
         this.$refs.output_text.blur();
       } else {
@@ -255,9 +286,40 @@ export default {
         }
       }
     },
+    expand() {
+      let rect = this.$refs.parser_content.getBoundingClientRect();
+      const box_width = rect.right - rect.left;
+      let final_destination = this.divider_position.indexOf(
+        this.active_divider_position
+      );
+      if (final_destination === 2) {
+        this.offset = -1;
+      } else if (final_destination === 0) {
+        this.offset = 1;
+      }
+      final_destination += this.offset;
+      final_destination = this.divider_position[final_destination];
+      if (final_destination === "center") {
+        this.$refs.parser_divider.style.left = `${box_width / 2}px`;
+        this.$refs.parser_input.style.width = `${box_width / 2 - 10}px`;
+        this.$refs.parser_output.style.width = `${box_width / 2 - 10}px`;
+        this.active_divider_position = "center";
+      } else if (final_destination === "left") {
+        this.$refs.parser_divider.style.left = `${20}px`;
+        this.$refs.parser_input.style.width = `${10}px`;
+        this.$refs.parser_output.style.width = `${box_width - 30}px`;
+        this.active_divider_position = "left";
+      } else {
+        this.$refs.parser_divider.style.left = `${box_width - 20}px`;
+        this.$refs.parser_input.style.width = `${box_width - 30}px`;
+        this.$refs.parser_output.style.width = `${10}px`;
+        this.active_divider_position = "right";
+      }
+    },
   },
   mounted() {
-    document.addEventListener("mouseup", () => {
+    document.addEventListener("mouseup", (event) => {
+      event.preventDefault();
       this.isDraging = false;
     });
   },
