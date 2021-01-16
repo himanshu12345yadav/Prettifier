@@ -1,12 +1,19 @@
 # Prettifier
 
+<p align="center">
+<img src="./public/prettifier-logo.png">
+</p>
+
+<p align="center"><img src="https://img.shields.io/cocoapods/metrics/doc-percent/A?color=blue&style=for-the-badge" />
+<img src="https://img.shields.io/github/license/himanshu12345yadav/Prettifier?logo=Prettifier&style=for-the-badge" />
+</p>
 Prettier is a Multipurpose Modern prettier. Prettifier can be useful in analysing large URL's (Uniform Resource Locator) that pass back and forth between server with very ease.
 
 Prettifier is completely written in `VUE JS`
 
 # Live Preview
 
-To get a live preview inside your browser, [`Click here`](https://himanshu12345yadav.github.io/Prettifier)
+To get a live preview [`Click here`](https://himanshu12345yadav.github.io/Prettifier)
 
 # Usage
 
