@@ -11,6 +11,8 @@ Prettier is a Multipurpose Modern prettier. Prettifier can be useful in analysin
 
 Prettifier is completely written in `VUE JS`
 
+<p align="center"><img src="./public/product-demo.gif" /></p>
+
 # Live Preview
 
 To get a live preview [`Click here`](https://himanshu12345yadav.github.io/Prettifier)
